@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"> 也行-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>bbb</title>
+</head>
+<body>
+    <!--thymeleaf：url表达式（绝对路径和相对路径）、普通url传参、restful风格url传参、混合url传参-->
+
+    <!--url表达式（绝对路径和相对路径）-->
+    <a href="http://www.baidu.com">百度一哈（原a标签）</a> <br>
+    <a th:href="@{http://www.baidu.com}">thymeleaf的绝对路径url</a>   <hr>
+
+    <a th:href="@{/ccc}">thymeleaf的相对路径url</a>   <hr>
+
+    <!--普通url传参-->
+    <a th:href="@{/templates/views?id=111&name=lisi}">普通url传参1(硬编码)</a>  <br>
+    <a th:href="@{'/ddd?id='+${id}+'&name='+${name}}">普通url传参1(动态获取)</a>  <br>
+
+    <a th:href="@{/templates/views(id=222,name=didi)}">普通url传参2(硬编码)</a>  <br>
+    <a th:href="@{/templates/views(id=${id},name=${name})}">普通url传参2(动态获取)</a>  <br> <hr>
+
+    <!--restful风格url传参-->
+    <a th:href="@{/eee/{id}/{name}(id=980,name=erniangzi)}">restful风格url传参(硬编码)</a>  <br>
+    <a th:href="@{/eee/{id}/{name}(id=${id},name=${name})}">restful风格url传参(动态获取)</a>  <br>
+
+    <!--混合url传参：restful风格+普通方式-->
+    <a th:href="@{/eee/{id}(id=852,name=yeee)}">混合url传参(硬编码)</a>  <br>
+    <a th:href="@{/eee/{id}(id=${id},name=${name})}">混合url传参(动态获取)</a>  <br>  <hr>
+
+
+</body>
+</html>

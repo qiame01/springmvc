@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"> 也行-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>aaa</title>
+</head>
+<body>
+<!--thymeleaf：流程控制-->
+
+<!--if-->
+<div th:if="${#strings.contains(aaa,'春2')}">春游</div>
+<div th:if="${aaa} == '春天'">大草原</div>
+<hr>
+
+<!--swith-->
+<div th:switch="${aaa}">
+    <div th:case="夏天">夏天</div>
+    <div th:case="春天">春天</div>
+    <div th:case="*">*表示java中的default</div>
+</div>
+<hr>
+
+<!--each迭代器-迭代list-->
+<table border="1" width="50%" align="center">
+    <tr>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>性别</th>
+    </tr>
+    <tr th:each="user:${users}">
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+        <td th:text="${user.sex}"></td>
+    </tr>
+</table>
+<hr>
+
+<!--each迭代器-状态变量-->
+<table border="1" width="50%" align="center">
+    <tr>
+        <th>姓名</th>
+        <th>序号</th>
+        <th>索引</th>
+        <th>当前对象</th>
+        <th>是否奇数</th>
+        <th>是否偶数</th>
+        <th>是否首位</th>
+        <th>是否末位</th>
+        <th>集合长度</th>
+    </tr>
+    <tr th:each="user,status : ${users}">
+        <td th:text="${user.name}"></td>
+        <td th:text="${status.count}"></td>
+        <td th:text="${status.index}"></td>
+        <td th:text="${status.current}"></td>
+        <td th:text="${status.even}"></td>
+        <td th:text="${status.odd}"></td>
+        <td th:text="${status.first}"></td>
+        <td th:text="${status.last}"></td>
+        <td th:text="${status.size}"></td>
+    </tr>
+</table>
+<hr>
+
+<!--each迭代器-迭代map-->
+<table border="1" width="50%" align="center">
+    <tr>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>性别</th>
+        <th>key</th>
+    </tr>
+    <tr th:each="uuu : ${userMap}">
+        <td th:text="${uuu.value.name}"></td>
+        <td th:text="${uuu.value.age}"></td>
+        <td th:text="${uuu.value.sex}"></td>
+        <td th:text="${uuu.key}"></td>
+    </tr>
+</table>
+<hr>
+
+
+</body>
+</html>

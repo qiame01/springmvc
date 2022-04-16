@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"> 也行-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>aaa</title>
+</head>
+<body>
+    <!--thymeleaf：从三大域对象取值-->
+
+    <div th:text="${#request.getAttribute('qqq')}"></div>
+    <div th:text="${#httpServletRequest.getAttribute('qqq')}"></div>
+    <hr>
+
+    <div th:text="${#session.getAttribute('qqq')}"></div>
+    <div th:text="${#httpSession.getAttribute('qqq')}"></div>
+    <div th:text="${session.qqq}"></div>
+    <hr>
+
+    <div th:text="${#servletContext.getAttribute('qqq')}"></div>
+    <div th:text="${application.qqq}"></div>
+    <hr>
+
+</body>
+</html>

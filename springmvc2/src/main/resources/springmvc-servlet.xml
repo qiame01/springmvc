@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- start=======================================================================================================-->
+    <!-- 手动配置手写映射器、适配器-->
+    <!-- <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" /> -->
+    <!-- <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" /> -->
+
+    <!-- 配置处理器handler，习惯上成为controller。。将被下面的注解扫描取代 -->
+    <bean name="/hello.do" class="com.ss.springmvc.HelloController1"></bean>
+
+    <!-- 视图解析器 -->
+    <!-- Example: prefix="/WEB-INF/jsp/", suffix=".jsp", viewname="test" -> "/WEB-INF/jsp/test.jsp"  -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 优化1：使用默认的手写映射器和适配器===========================================================================-->
+    <!-- 将上面两个注掉，因为底层默认配置文件中已经配置了几个默认的手动映射器和适配器 -->
+
+    <!-- 优化2：使用默认的注解映射器、适配器===========================================================================-->
+    <!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" /> -->
+    <!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" /> -->
+
+    <!-- 开启注解扫描，取代上面的配置处理器handler，同时不再继承Controller接口 -->
+    <context:component-scan base-package="com.ss.*"/>
+
+    <!-- 优化3：使用推荐的注解映射器、适配器，因为上面的默认的注解映射器和适配器已经过期==================================-->
+
+    <!-- 优化4：使用注解驱动，替代上面推荐使用的映射器和适配器,且提供了对json的支持======================================-->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 优化5：配置静态资源映射器——静态资源拦截问题（见ssm综合练习之3） 处理静态资源拦截问题===========================-->
+    <!-- 进行此配置后将会多一个静态资源映射器 。前两个映射器（？？）找不到资源时，就启用这第三个映射器-->
+    <mvc:default-servlet-handler/>
+
+    <!-- 以上是start及其优化==========================================================================================-->
+
+    <!-- 文件上传解析器===============================================================================================-->
+    <!-- Provides "maxUploadSize", "maxInMemorySize" and "defaultEncoding" settings as bean properties  -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 一次性文件上传最大值，设置文件上传大小，单位：b -->
+        <property name="maxUploadSize" value="8000000"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
+
+    <!-- 文件上传异常解析器（自定义异常解析器）=========================================================================-->
+    <bean class="com.ss.springmvc.MyHandlerExceptionResolver"></bean>
+
+    <!-- 拦截器=======================================================================================================-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 拦截所有请求。注意/*只能拦截一级请求，/**可以拦截多级请求-->
+            <mvc:mapping path="/**"/>
+            <!-- 自定义拦截器的全路径 -->
+            <bean class="com.ss.springmvc.MyHandlerInterceptor1"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.ss.springmvc.MyHandlerInterceptor2"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+</beans>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"> 也行-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>bbb</title>
+</head>
+<body>
+    <!--thymeleaf：时间日期格式化-->
+
+    <div th:text="${date}"></div>
+    <div th:text="${#dates.format(date)}"></div>
+    <div th:text="${#dates.format(date,'yyyy-MM-dd HH:mm:ss')}"></div>
+    <div th:text="${#dates.year(date)}"></div>
+
+</body>
+</html>
